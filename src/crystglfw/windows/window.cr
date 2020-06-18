@@ -633,7 +633,7 @@ module CrystGLFW
     # Returns true if the window is focused. False otherwise.
     #
     # NOTE: This method must be called from within a `CrystGLFW#run` block definition.
-    def focused? : Bool
+    def focused : Bool
       check_state State::Focused
     end
 
@@ -688,7 +688,7 @@ module CrystGLFW
     # NOTE: This method must be called from within a `CrystGLFW#run` block definition.
     def cursor : Cursor
       if @cursor.nil?
-        @cursor = Cursor.new(Cursor::Shape::Arrow, self) 
+        @cursor = Cursor.new(Cursor::Shape::Arrow, self)
       end
       @cursor.as(Cursor)
     end
@@ -904,7 +904,7 @@ module CrystGLFW
     private def set_toggle_focus_callback
       callback = LibGLFW::Windowfocusfun.new do |handle, focused_code|
         win = Window.from(handle)
-        focused? = focused_code == 1
+        focused = focused_code == 1
         event = Event::WindowToggleFocus.new(win, focused?)
         win.toggle_focus_callback.try &.call(event)
       end
@@ -915,7 +915,7 @@ module CrystGLFW
     private def set_toggle_iconification_callback
       callback = LibGLFW::Windowiconifyfun.new do |handle, iconified_code|
         win = Window.from(handle)
-        iconified? = iconified_code == 1
+        iconified = iconified_code == 1
         event = Event::WindowToggleIconification.new(win, iconified?)
         win.toggle_iconification_callback.try &.call(event)
       end
